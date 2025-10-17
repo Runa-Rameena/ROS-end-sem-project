@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<robot name="snake" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<material name="snake_green">
+  <color rgba="0.2 0.8 0.2 1.000"/>
+</material>
+
+<material name="snake_dark">
+  <color rgba="0.1 0.4 0.1 1.000"/>
+</material>
+
+<material name="snake_pattern">
+  <color rgba="0.3 0.9 0.3 1.000"/>
+</material>
+
+</robot>

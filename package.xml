@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>snake_robot</name>
+  <version>0.0.1</version>
+  <description>Snake robot URDF + control</description>
+  <maintainer email="user@example.com">Renuka</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake_python</buildtool_depend>
+  <buildtool_depend>ament_python</buildtool_depend>
+
+
+  <depend>rclcpp</depend>
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>control_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>gazebo_ros</depend>
+  <depend>robot_state_publisher</depend>
+  <depend>controller_manager</depend>
+  <depend>ros2_control</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

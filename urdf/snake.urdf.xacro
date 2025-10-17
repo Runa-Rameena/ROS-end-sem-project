@@ -1,0 +1,271 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="snake_robot">
+
+  <!-- ===== Include Materials ===== -->
+  <xacro:include filename="$(find snake_robot)/urdf/materials.xacro"/>
+
+  <!-- ===== Dummy Root Link ===== -->
+  <link name="world"/>
+
+  <!-- ===== Base Link ===== -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="2.0"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find snake_robot)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="snake_green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find snake_robot)/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="world_joint" type="fixed">
+    <parent link="world"/>
+    <child link="base_link"/>
+  </joint>
+
+  <!-- ===== Snake Segments ===== -->
+  <!-- Link 1 -->
+  <link name="link1">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.005" iyy="0.005" izz="0.005" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find snake_robot)/meshes/02_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find snake_robot)/meshes/02_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <origin xyz="0.15 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="2.0" lower="-1.57" upper="1.57"/>
+    <dynamics damping="0.5" friction="0.1"/>
+    <safety_controller k_position="100" k_velocity="10" soft_lower_limit="-1.5" soft_upper_limit="1.5"/>
+  </joint>
+
+  <!-- Link 2 -->
+  <link name="link2">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.005" iyy="0.005" izz="0.005" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find snake_robot)/meshes/02_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find snake_robot)/meshes/02_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <origin xyz="0.15 0 0" rpy="0 0 0"/>
+    <axis xyz="0 0 1"/>
+    <limit effort="10" velocity="2.0" lower="-1.57" upper="1.57"/>
+    <dynamics damping="0.5" friction="0.1"/>
+    <safety_controller k_position="100" k_velocity="10" soft_lower_limit="-1.5" soft_upper_limit="1.5"/>
+  </joint>
+
+  <!-- Remaining segments -->
+  <xacro:macro name="snake_segment" params="n">
+    <link name="link${n}">
+      <inertial>
+        <origin xyz="0 0 0" rpy="0 0 0"/>
+        <mass value="1.0"/>
+        <inertia ixx="0.005" iyy="0.005" izz="0.005" ixy="0.0" ixz="0.0" iyz="0.0"/>
+      </inertial>
+      <visual>
+        <geometry>
+          <mesh filename="file://$(find snake_robot)/meshes/02_1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+        <xacro:if value="${n % 3 == 0}">
+          <material name="snake_pattern"/>
+        </xacro:if>
+        <xacro:if value="${n % 3 == 1}">
+          <material name="snake_green"/>
+        </xacro:if>
+        <xacro:if value="${n % 3 == 2}">
+          <material name="snake_dark"/>
+        </xacro:if>
+      </visual>
+      <collision>
+        <geometry>
+          <mesh filename="file://$(find snake_robot)/meshes/02_1.stl" scale="0.001 0.001 0.001"/>
+        </geometry>
+      </collision>
+    </link>
+
+    <joint name="joint${n}" type="revolute">
+      <parent link="link${n - 1}"/>
+      <child link="link${n}"/>
+      <origin xyz="0.15 0 0" rpy="0 0 0"/>
+      <axis xyz="0 0 1"/>
+      <limit effort="10" velocity="2.0" lower="-1.57" upper="1.57"/>
+      <dynamics damping="0.5" friction="0.1"/>
+      <safety_controller k_position="100" k_velocity="10" soft_lower_limit="-1.5" soft_upper_limit="1.5"/>
+    </joint>
+  </xacro:macro>
+
+  <!-- Generate segments 3 through 33 -->
+  <xacro:snake_segment n="3"/>
+  <xacro:snake_segment n="4"/>
+  <xacro:snake_segment n="5"/>
+  <xacro:snake_segment n="6"/>
+  <xacro:snake_segment n="7"/>
+  <xacro:snake_segment n="8"/>
+  <xacro:snake_segment n="9"/>
+  <xacro:snake_segment n="10"/>
+  <xacro:snake_segment n="11"/>
+  <xacro:snake_segment n="12"/>
+  <xacro:snake_segment n="13"/>
+  <xacro:snake_segment n="14"/>
+  <xacro:snake_segment n="15"/>
+  <xacro:snake_segment n="16"/>
+  <xacro:snake_segment n="17"/>
+  <xacro:snake_segment n="18"/>
+  <xacro:snake_segment n="19"/>
+  <xacro:snake_segment n="20"/>
+  <xacro:snake_segment n="21"/>
+  <xacro:snake_segment n="22"/>
+  <xacro:snake_segment n="23"/>
+  <xacro:snake_segment n="24"/>
+  <xacro:snake_segment n="25"/>
+  <xacro:snake_segment n="26"/>
+  <xacro:snake_segment n="27"/>
+  <xacro:snake_segment n="28"/>
+  <xacro:snake_segment n="29"/>
+  <xacro:snake_segment n="30"/>
+  <xacro:snake_segment n="31"/>
+  <xacro:snake_segment n="32"/>
+  <xacro:snake_segment n="33"/>
+
+  <!-- ===== Tail Segment ===== -->
+  <link name="tail_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.5"/>
+      <inertia ixx="0.001" iyy="0.001" izz="0.001" ixy="0.0" ixz="0.0" iyz="0.0"/>
+    </inertial>
+    <visual>
+      <geometry>
+        <mesh filename="file://$(find snake_robot)/meshes/tail_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+      <material name="snake_pattern"/>
+    </visual>
+    <collision>
+      <geometry>
+        <mesh filename="file://$(find snake_robot)/meshes/tail_1.stl" scale="0.001 0.001 0.001"/>
+      </geometry>
+    </collision>
+  </link>
+
+  <joint name="joint34" type="fixed">
+    <parent link="link33"/>
+    <child link="tail_link"/>
+    <origin xyz="0.15 0 0" rpy="0 0 0"/>
+  </joint>
+
+  <!-- ===== ROS2 Control Configuration ===== -->
+  <ros2_control name="SnakeRobotSystem" type="system">
+    <hardware>
+      <plugin>gazebo_ros2_control/GazeboSystem</plugin>
+    </hardware>
+
+    <!-- Define command and state interfaces for all joints -->
+    <joint name="joint1">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+      <param name="min">-1.57</param>
+      <param name="max">1.57</param>
+    </joint>
+
+    <joint name="joint2">
+      <command_interface name="position"/>
+      <state_interface name="position"/>
+      <state_interface name="velocity"/>
+      <state_interface name="effort"/>
+      <param name="min">-1.57</param>
+      <param name="max">1.57</param>
+    </joint>
+
+    <xacro:macro name="snake_joint_control" params="n">
+      <joint name="joint${n}">
+        <command_interface name="position"/>
+        <state_interface name="position"/>
+        <state_interface name="velocity"/>
+        <state_interface name="effort"/>
+        <param name="min">-1.57</param>
+        <param name="max">1.57</param>
+      </joint>
+    </xacro:macro>
+
+    <xacro:snake_joint_control n="3"/>
+    <xacro:snake_joint_control n="4"/>
+    <xacro:snake_joint_control n="5"/>
+    <xacro:snake_joint_control n="6"/>
+    <xacro:snake_joint_control n="7"/>
+    <xacro:snake_joint_control n="8"/>
+    <xacro:snake_joint_control n="9"/>
+    <xacro:snake_joint_control n="10"/>
+    <xacro:snake_joint_control n="11"/>
+    <xacro:snake_joint_control n="12"/>
+    <xacro:snake_joint_control n="13"/>
+    <xacro:snake_joint_control n="14"/>
+    <xacro:snake_joint_control n="15"/>
+    <xacro:snake_joint_control n="16"/>
+    <xacro:snake_joint_control n="17"/>
+    <xacro:snake_joint_control n="18"/>
+    <xacro:snake_joint_control n="19"/>
+    <xacro:snake_joint_control n="20"/>
+    <xacro:snake_joint_control n="21"/>
+    <xacro:snake_joint_control n="22"/>
+    <xacro:snake_joint_control n="23"/>
+    <xacro:snake_joint_control n="24"/>
+    <xacro:snake_joint_control n="25"/>
+    <xacro:snake_joint_control n="26"/>
+    <xacro:snake_joint_control n="27"/>
+    <xacro:snake_joint_control n="28"/>
+    <xacro:snake_joint_control n="29"/>
+    <xacro:snake_joint_control n="30"/>
+    <xacro:snake_joint_control n="31"/>
+    <xacro:snake_joint_control n="32"/>
+    <xacro:snake_joint_control n="33"/>
+  </ros2_control>
+
+  <!-- ===== Gazebo ROS2 Control Plugin ===== -->
+  <gazebo>
+    <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+      <parameters>$(find snake_robot)/config/ros2_controllers.yaml</parameters>
+    </plugin>
+  </gazebo>
+
+</robot>

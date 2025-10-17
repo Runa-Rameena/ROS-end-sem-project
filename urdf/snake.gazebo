@@ -1,0 +1,77 @@
+<?xml version="1.0" ?>
+<robot name="snake" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+<xacro:property name="body_color" value="Gazebo/Silver" />
+
+<gazebo>
+  <plugin name="gazebo_ros2_control" filename="libgazebo_ros2_control.so">
+    <robot_param>robot_description</robot_param>
+  </plugin>
+</gazebo>
+
+<gazebo reference="base_link">
+  <material>${body_color}</material>
+  <mu1>0.8</mu1>
+  <mu2>0.8</mu2>
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+<!-- Common properties for all snake segments -->
+<xacro:macro name="segment_gazebo" params="n">
+  <gazebo reference="link${n}">
+    <mu1>0.8</mu1>
+    <mu2>0.8</mu2>
+    <kp>1000000.0</kp>
+    <kd>100.0</kd>
+    <selfCollide>true</selfCollide>
+    <gravity>true</gravity>
+    <maxContacts>4</maxContacts>
+  </gazebo>
+</xacro:macro>
+
+<!-- Apply properties to all segments -->
+<xacro:segment_gazebo n="1"/>
+<xacro:segment_gazebo n="2"/>
+<xacro:segment_gazebo n="3"/>
+<xacro:segment_gazebo n="4"/>
+<xacro:segment_gazebo n="5"/>
+<xacro:segment_gazebo n="6"/>
+<xacro:segment_gazebo n="7"/>
+<xacro:segment_gazebo n="8"/>
+<xacro:segment_gazebo n="9"/>
+<xacro:segment_gazebo n="10"/>
+<xacro:segment_gazebo n="11"/>
+<xacro:segment_gazebo n="12"/>
+<xacro:segment_gazebo n="13"/>
+<xacro:segment_gazebo n="14"/>
+<xacro:segment_gazebo n="15"/>
+<xacro:segment_gazebo n="16"/>
+<xacro:segment_gazebo n="17"/>
+<xacro:segment_gazebo n="18"/>
+<xacro:segment_gazebo n="19"/>
+<xacro:segment_gazebo n="20"/>
+<xacro:segment_gazebo n="21"/>
+<xacro:segment_gazebo n="22"/>
+<xacro:segment_gazebo n="23"/>
+<xacro:segment_gazebo n="24"/>
+<xacro:segment_gazebo n="25"/>
+<xacro:segment_gazebo n="26"/>
+<xacro:segment_gazebo n="27"/>
+<xacro:segment_gazebo n="28"/>
+<xacro:segment_gazebo n="29"/>
+<xacro:segment_gazebo n="30"/>
+<xacro:segment_gazebo n="31"/>
+<xacro:segment_gazebo n="32"/>
+<xacro:segment_gazebo n="33"/>
+
+<gazebo reference="tail_link">
+  <mu1>0.8</mu1>
+  <mu2>0.8</mu2>
+  <kp>1000000.0</kp>
+  <kd>100.0</kd>
+  <selfCollide>true</selfCollide>
+  <gravity>true</gravity>
+</gazebo>
+
+</robot>

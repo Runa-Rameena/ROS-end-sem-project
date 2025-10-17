@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<robot name="snake" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+<xacro:include filename="$(find snake_description)/urdf/materials.xacro" />
+<xacro:include filename="$(find snake_description)/urdf/snake.trans" />
+<xacro:include filename="$(find snake_description)/urdf/snake.gazebo" />
+<link name="base_link">
+  <inertial>
+    <origin xyz="1.7661974143715367 0.9640748793406919 0.13379509171078768" rpy="0 0 0"/>
+    <mass value="49.294925491945754"/>
+    <inertia ixx="0.388918" iyy="0.227654" izz="0.494409" ixy="0.042187" iyz="-0.019872" ixz="0.009252"/>
+  </inertial>
+  <visual>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://snake_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+    <material name="silver"/>
+  </visual>
+  <collision>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <geometry>
+      <mesh filename="package://snake_description/meshes/base_link.stl" scale="0.001 0.001 0.001"/>
+    </geometry>
+  </collision>
+</link>
+
+</robot>

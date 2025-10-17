@@ -1,0 +1,16 @@
+# build artifacts
+build/
+install/
+log/
+*.egg-info/
+# python caches
+__pycache__/
+*.pyc
+# editor files
+.vscode/
+.idea/
+.DS_Store
+# test caches
+.pytest_cache/
+# large binary output
+*.log
