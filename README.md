@@ -50,9 +50,4 @@ The hardware closely replicated the simulated motion:
 
 Both systems use identical control logic, proving the simulation accurately predicts real-world snake locomotion.
 
-## Contributors
-CH.SC.U4AIE23054 – Subhash R  
-CH.SC.U4AIE23057 – Renuka V J  
-CH.SC.U4AIE23059 – Vaishnavi S  
-CH.SC.U4AIE23060 – Veena Sundari A
 
