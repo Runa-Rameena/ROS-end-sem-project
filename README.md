@@ -39,7 +39,6 @@ We fabricated a physical 8-segment snake robot using 3D-printed PLA components a
 The same sinusoidal control algorithm from simulation was programmed into the ESP32. Each servo receives PWM signals with phase-shifted timing to create the traveling wave motion.
 
 **Total Weight:** ~520g  
-**Cost:** ₹2,000-₹2,500 (~$25-$30 USD)
 
 ## Simulation-to-Hardware Validation
 
@@ -56,3 +55,4 @@ CH.SC.U4AIE23054 – Subhash R
 CH.SC.U4AIE23057 – Renuka V J  
 CH.SC.U4AIE23059 – Vaishnavi S  
 CH.SC.U4AIE23060 – Veena Sundari A
+
